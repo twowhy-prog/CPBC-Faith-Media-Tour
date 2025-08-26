@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>CPBC Faith & Media Tour | 신앙과 미디어 체험 견학</title>
+<style>
+  :root{
+    --brand:#2d4ea3; --brand2:#5c7ae0;
+    --bg:#f6f8fb; --card:#fff; --txt:#1b2333; --muted:#5d6b86;
+    --radius:16px; --shadow:0 10px 28px rgba(0,0,0,.08);
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--txt);font-family:"Noto Sans KR",system-ui,Segoe UI,Arial,sans-serif;line-height:1.6}
+  header{
+    position:sticky;top:0;z-index:50;background:linear-gradient(120deg,var(--brand),#1b2a6b);
+    color:#fff;padding:18px 14px;box-shadow:0 2px 12px rgba(0,0,0,.12)
+  }
+  .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:12px}
+  h1{margin:0;font-size:clamp(18px,2.6vw,24px);font-weight:700}
+  nav{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap}
+  nav a, .admin-btn{
+    color:#fff;text-decoration:none;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.28);
+    font-weight:600;font-size:14px;backdrop-filter:saturate(140%) blur(2px)
+  }
+  .admin-btn{cursor:pointer;background:rgba(255,255,255,.06)}
+  main{max-width:1100px;margin:28px auto;padding:0 14px}
+  section{margin:26px 0}
+  h2{font-size:clamp(18px,2.6vw,22px);margin:12px 0 14px;border-left:6px solid var(--brand);padding-left:10px}
+  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
+  .card{
+    background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);
+    padding:18px
+  }
+  .pill{display:inline-block;padding:2px 10px;border-radius:999px;background:#eef2ff;color:#334155;font-weight:700;font-size:12px}
+  .list li{margin:6px 0}
+  /* 신청서 */
+  form label{display:block;margin:12px 0 6px;font-weight:600}
+  form input[type="text"],
+  form input[type="tel"],
+  form input[type="email"],
+  form textarea,
+  form select{
+    width:100%;padding:12px 12px;border:1px solid #d7dce6;border-radius:12px;font-size:15px;outline:none;
+    transition:.2s
+  }
+  form input:focus, form select:focus, form textarea:focus{border-color:var(--brand);box-shadow:0 0 0 4px rgba(45,78,163,.12)}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+  .help{font-size:12px;color:var(--muted)}
+  .actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .btn{
+    border:none;border-radius:12px;padding:12px 16px;font-weight:700;cursor:pointer
+  }
+  .btn-primary{background:var(--brand);color:#fff}
+  .btn-ghost{background:#eef2ff;color:#1e293b}
+  .note{background:#f1f5ff;border:1px solid #dbe3ff;border-radius:12px;padding:10px 12px;color:#233056}
+  /* 주변 성지 카드 */
+  .sacred{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+  .sacred .item{display:flex;gap:12px;align-items:flex-start}
+  .sacred .thumb{width:72px;height:72px;border-radius:12px;flex:none;background:#eef1f7;object-fit:cover}
+  .sacred a{color:var(--brand);font-weight:700;text-decoration:none}
+  /* 관리자 패널 */
+  dialog{border:none;border-radius:18px;box-shadow:0 30px 60px rgba(0,0,0,.25);max-width:980px;width:calc(100% - 24px);padding:0}
+  .dlg-head{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid #e7ebf5}
+  .dlg-body{padding:18px}
+  .table{width:100%;border-collapse:separate;border-spacing:0 8px}
+  .table th{font-size:13px;text-align:left;color:#475569}
+  .table td,.table th{padding:10px 10px}
+  .rowcard{background:#fff;border:1px solid #e7ebf5;border-radius:12px}
+  .status{font-size:12px;font-weight:800;padding:6px 10px;border-radius:999px}
+  .s-new{background:#eef2ff;color:#1d4ed8}.s-ok{background:#e7f8ef;color:#166534}.s-rej{background:#fdecec;color:#b91c1c}
+  .mini{font-size:12px;color:#64748b}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 6px}
+  .search{flex:1 1 220px}
+  .right{margin-left:auto}
+  details>summary{cursor:pointer;font-weight:700;color:#1e293b}
+  .pin-wrap{display:flex;gap:10px;align-items:center}
+  .pin-wrap input{width:140px}
+  /* 반응형 */
+  @media (max-width:900px){
+    .row{grid-template-columns:1fr}
+    nav{display:none}
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>CPBC Faith & Media Tour | 신앙과 미디어 체험 견학</h1>
+      <nav>
+        <a href="#intro">소개</a>
+        <a href="#course">코스</a>
+        <a href="#guide">운영안내</a>
+        <a href="#holy">주변성지</a>
+        <a href="#visit">오시는 길</a>
+        <a href="#apply">신청</a>
+      </nav>
+      <button class="admin-btn" id="btnAdmin">관리자 모드</button>
+    </div>
+  </header>
+
+  <main>
+    <!-- 소개 -->
+    <section id="intro" class="grid">
+      <div class="card" style="grid-column:span 7">
+        <h2>소개</h2>
+        <p>가톨릭평화방송(CPBC)은 사랑과 나눔의 가치를 실천하며 복음의 메시지를 전하는 미디어 사도직을 수행하고 있습니다. CPBC 견학 프로그램은 방송 현장을 직접 체험하고, 신앙과 미디어가 함께하는 특별한 시간을 상시로 제공합니다.</p>
+        <p>특히 본사에 모신 <strong>성 카를로 아쿠티스 성상</strong> 앞에서 디지털 시대의 신앙인의 역할을 함께 배우고 묵상합니다.</p>
+        <p><button class="btn btn-ghost" id="openCarlo">[성 카를로 아쿠티스 성인의 의미]</button></p>
+      </div>
+      <div class="card" style="grid-column:span 5">
+        <h2>핵심 안내</h2>
+        <ul class="list">
+          <li><span class="pill">대상</span> 초등학생 이상 / 교회·교육·공공·시민단체</li>
+          <li><span class="pill">인원</span> 10~15명 (소규모)</li>
+          <li><span class="pill">일정</span> 매주 <strong>화/금</strong>, <strong>오전 10시 · 오후 2시</strong></li>
+          <li><span class="pill">장소</span> 서울 중구 삼일대로 330 (CPBC 본사)</li>
+          <li><span class="pill">비용</span> 무료</li>
+          <li class="note">※ 방문 희망일 <strong>최소 30일 전</strong> 신청 필수, 담당자 확인 후 최종 확정</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 코스 -->
+    <section id="course" class="grid">
+      <div class="card" style="grid-column:span 12">
+        <h2>견학 코스 (약 1시간~1시간 30분)</h2>
+        <div class="grid">
+          <div class="card" style="grid-column:span 4">
+            <h3>① 역사 전시실 / CPBC 소개</h3>
+            <p>설립 배경과 사명 소개, 라디오·TV·신문·뉴미디어 발자취 영상 시청</p>
+          </div>
+          <div class="card" style="grid-column:span 4">
+            <h3>② 성 카를로 아쿠티스 성상 앞 체험</h3>
+            <p>성인의 삶과 영성, 온라인 복음 전파의 모범 배우기 · 묵상</p>
+          </div>
+          <div class="card" style="grid-column:span 4">
+            <h3>③ 방송 스튜디오 체험</h3>
+            <p>카메라, 믹서, 스위처, 조명 등 소개 · 촬영/녹음 실습</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 운영 안내 -->
+    <section id="guide" class="grid">
+      <div class="card" style="grid-column:span 12">
+        <h2>운영 안내</h2>
+        <ul class="list">
+          <li>대상: 초등학생 이상, 교회기관·교육기관·공공기관·시민단체 등</li>
+          <li>인원: 10 ~ 15명 소규모 그룹</li>
+          <li>일정: 매주 화·금 (오전 10시 / 오후 2시, 약 1시간 30분)</li>
+          <li>장소: 가톨릭평화방송 본사 (서울시 중구 삼일대로 330)</li>
+          <li>비용: 무료</li>
+          <li>신청: 방문 희망일 최소 30일 전 신청서 접수 → 일정 확정</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 주변 성지 -->
+    <section id="holy" class="grid">
+      <div class="card" style="grid-column:span 12">
+        <h2>주변 성지 안내</h2>
+        <div class="sacred">
+          <div class="item">
+            <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/0f/Myeongdong_Cathedral_20140506_002.jpg/320px-Myeongdong_Cathedral_20140506_002.jpg" alt="명동대성당">
+            <div>
+              <a href="https://www.mdsd.or.kr/" target="_blank" rel="noopener">명동대성당</a>
+              <div class="mini">한국 가톨릭의 상징적 성당 (도보 15~20분)</div>
+            </div>
+          </div>
+          <div class="item">
+            <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Seoul_Yakhyeon_Catholic_Church_20150321_002.jpg/320px-Seoul_Yakhyeon_Catholic_Church_20150321_002.jpg" alt="약현성당">
+            <div>
+              <a href="http://www.yakhyeon.or.kr" target="_blank" rel="noopener">약현성당</a>
+              <div class="mini">한국 최초의 서양식 벽돌 성당 (1892)</div>
+            </div>
+          </div>
+          <div class="item">
+            <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Seosomun_Historical_Park_and_Museum_2020.jpg/320px-Seosomun_Historical_Park_and_Museum_2020.jpg" alt="서소문성지역사박물관">
+            <div>
+              <a href="https://www.seosomun.org" target="_blank" rel="noopener">서소문성지역사박물관</a>
+              <div class="mini">천주교 순교 성지, 하늘광장으로 유명</div>
+            </div>
+          </div>
+          <div class="item">
+            <img class="thumb" src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/88/Saenamteo_Jeoldusan_Martyrs%27_Shrine_2015.JPG/320px-Saenamteo_Jeoldusan_Martyrs%27_Shrine_2015.JPG" alt="새남터 순교성지">
+            <div>
+              <a href="http://saenamteo.or.kr" target="_blank" rel="noopener">새남터 순교성지</a>
+              <div class="mini">조선 후기 순교 성지, 기념관 운영</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 오시는 길 -->
+    <section id="visit" class="grid">
+      <div class="card" style="grid-column:span 12">
+        <h2>오시는 길</h2>
+        <ul class="list">
+          <li>지하철: 2호선 을지로3가(12번 출구) 도보 5분 / 3호선 충무로(7번 출구) 도보 7분</li>
+          <li>버스: 을지로입구/퇴계로 인근 정류장 하차 후 도보</li>
+          <li>승용차: 인솔자 차량 1대 무료 (승합차·버스 불가, 추가 차량 유료)</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- 신청서 -->
+    <section id="apply" class="grid">
+      <div class="card" style="grid-column:span 12">
+        <h2>신청서 작성</h2>
+        <form id="applyForm" novalidate>
+          <!-- ① 단체 정보 -->
+          <div class="row">
+            <div>
+              <label>단체명 *</label>
+              <input type="text" name="org" required placeholder="예: 서울 ○○초 5학년"/>
+            </div>
+            <div>
+              <label>소속(본당/학교/기관명 등) *</label>
+              <input type="text" name="aff" required placeholder="예: ○○본당 / ○○교육청"/>
+            </div>
+          </div>
+          <div>
+            <label>참가 인원 *</label>
+            <input type="text" name="headcount" required placeholder="예: 총 15명 / 학생 13, 인솔자 2"/>
+          </div>
+
+          <!-- ② 대표 인솔자 정보 -->
+          <div class="row">
+            <div>
+              <label>대표 인솔자 성명 *</label>
+              <input type="text" name="leader" required />
+            </div>
+            <div>
+              <label>연락처(휴대폰) *</label>
+              <input type="tel" name="phone" required pattern="^0\d{1,2}-?\d{3,4}-?\d{4}$" placeholder="예: 010-1234-5678"/>
+              <div class="help">숫자와 하이픈(-) 허용</div>
+            </div>
+          </div>
+          <div class="row">
+            <div>
+              <label>이메일 *</label>
+              <input type="email" name="email" required placeholder="예: example@cpbc.co.kr"/>
+            </div>
+            <div>
+              <label>차량 이용 여부 *</label>
+              <select name="carUse" id="carUse" required>
+                <option value="">선택</option>
+                <option>예</option>
+                <option>아니오</option>
+              </select>
+            </div>
+          </div>
+          <div id="carPlateWrap" style="display:none">
+            <label>차량번호 (차량 이용 시)</label>
+            <input type="text" name="carNo" placeholder="예: 12가3456"/>
+          </div>
+
+          <!-- ③ 희망 일정: 30일 이후 & 화/금만 -->
+          <div class="row">
+            <div>
+              <label>희망 날짜 *</label>
+              <select name="date" id="dateSelect" required></select>
+              <div class="help">오늘 기준 30일 이후, 매주 화/금만 표시됩니다.</div>
+            </div>
+            <div>
+              <label>희망 시간 *</label>
+              <select name="time" required>
+                <option>오전 10시</option>
+                <option>오후 2시</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- ④ 참가 대상 -->
+          <div>
+            <label>참가 대상 *(복수 선택 가능)</label>
+            <div class="row">
+              <label><input type="checkbox" name="target" value="학생 단체" /> 초등학생 이상 학생 단체</label>
+              <label><input type="checkbox" name="target" value="교회/본당" /> 교회기관 / 본당 단체</label>
+              <label><input type="checkbox" name="target" value="교육기관" /> 교육기관 (학교, 아카데미 등)</label>
+              <label><input type="checkbox" name="target" value="공공/시민" /> 공공기관 / 시민사회단체</label>
+              <label><input type="checkbox" name="target" value="기타" /> 기타</label>
+            </div>
+          </div>
+
+          <!-- ⑤ 요청사항 -->
+          <div>
+            <label>특별 요청사항</label>
+            <textarea name="request" rows="4" placeholder="알레르기, 이동 보조, 사진 촬영 등 요청사항"></textarea>
+          </div>
+
+          <!-- ⑥ 안내 및 동의 -->
+          <div>
+            <label>안내 및 동의 *</label>
+            <div class="note" style="margin:.4rem 0  .6rem">
+              · 본 견학 프로그램은 무료로 진행됩니다.<br/>
+              · 방송사 내부 사정/공휴일에는 일정이 조정될 수 있습니다.<br/>
+              · 인솔자 1인은 반드시 동행해야 하며, 방송 중 사진 촬영은 제한될 수 있습니다.<br/>
+              · 견학 희망일 최소 30일 전까지 신청서를 제출해야 하며, 담당자 확인 후 최종 확정됩니다.
+            </div>
+            <label><input type="checkbox" name="agree" required /> 네, 위 내용을 확인하였습니다.</label>
+          </div>
+
+          <div class="actions">
+            <button type="submit" class="btn btn-primary">신청서 제출</button>
+            <button type="button" class="btn btn-ghost" id="btnReset">작성 초기화</button>
+          </div>
+          <div id="submitMsg" class="note" style="display:none;margin-top:10px"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- 성 카를로 아쿠티스 모달 -->
+  <dialog id="carloDlg">
+    <div class="dlg-head">
+      <strong>성 카를로 아쿠티스 (1991–2006)</strong>
+      <button class="admin-btn" onclick="document.getElementById('carloDlg').close()">닫기 ✕</button>
+    </div>
+    <div class="dlg-body">
+      <p>어린 나이에 인터넷을 활용해 전 세계 성체 기적을 아카이브화하며 온라인 복음 전파의 모범이 된 성인입니다. 가톨릭평화방송은 성인을 제2주보성인으로 모시고 본사 성상을 통해 신앙과 미디어 사도직의 본보기를 삼고 있습니다.</p>
+    </div>
+  </dialog>
+
+  <!-- 관리자 패널 -->
+  <dialog id="adminDlg">
+    <div class="dlg-head">
+      <strong>관리자 패널 · CPBC 견학 신청 관리</strong>
+      <button class="admin-btn" onclick="document.getElementById('adminDlg').close()">닫기 ✕</button>
+    </div>
+    <div class="dlg-body">
+      <details open>
+        <summary>접속</summary>
+        <div class="pin-wrap" style="margin:10px 0 6px">
+          <label>PIN</label>
+          <input type="password" id="pinInput" placeholder="cpbc2025" />
+          <button class="btn btn-primary" id="btnUnlock">접속</button>
+          <span id="pinMsg" class="mini"></span>
+        </div>
+      </details>
+
+      <div id="adminArea" style="display:none">
+        <div class="toolbar">
+          <input class="search" type="search" id="q" placeholder="검색: 단체/인솔자/연락처/이메일/날짜" />
+          <select id="statusFilter">
+            <option value="">상태(전체)</option>
+            <option value="신규">신규</option>
+            <option value="확정">확정</option>
+            <option value="반려">반려</option>
+          </select>
+          <div class="right">
+            <button class="btn btn-ghost" id="btnExport">CSV 내보내기</button>
+            <button class="btn btn-ghost" id="btnClear">전체 삭제</button>
+          </div>
+        </div>
+
+        <table class="table" id="tbl">
+          <thead>
+            <tr>
+              <th>상태</th>
+              <th>신청일시</th>
+              <th>희망일/시간</th>
+              <th>단체 / 소속</th>
+              <th>인솔자</th>
+              <th>연락처 / 이메일</th>
+              <th>차량</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="tbody"></tbody>
+        </table>
+      </div>
+    </div>
+  </dialog>
+
+<script>
+/* ========= 설정 ========= */
+const ADMIN_PIN = 'cpbc2025'; // 필요 시 변경
+const STORAGE_KEY = 'cpbc_tour_submissions_v1';
+
+/* ========= 유틸 ========= */
+const $ = (sel, root=document) => root.querySelector(sel);
+const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
+const fmt = (d)=> new Date(d).toLocaleString('ko-KR',{hour12:false});
+const todaySeoul = ()=> {
+  // 서울 기준(UTC+9) 날짜
+  const now = new Date();
+  const utc = now.getTime() + (now.getTimezoneOffset()*60000);
+  return new Date(utc + (9*3600000));
+}
+
+/* ========= 날짜 로직 (30일 이후 & 화/금만) ========= */
+function buildDateOptions(){
+  const select = $('#dateSelect');
+  select.innerHTML = '';
+  const now = todaySeoul();
+  const start = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  start.setDate(start.getDate() + 30); // 30일 이후
+  // 다음 6개월 범위 내 화(2)/금(5)만 수집
+  const end = new Date(start); end.setMonth(end.getMonth()+6);
+  let cursor = new Date(start);
+  let count = 0;
+  while(cursor <= end){
+    const day = cursor.getDay(); // 일0 월1 화2 수3 목4 금5 토6
+    if(day===2 || day===5){
+      const y = cursor.getFullYear();
+      const m = String(cursor.getMonth()+1).padStart(2,'0');
+      const d = String(cursor.getDate()).padStart(2,'0');
+      const label = `${y}-${m}-${d} (${['일','월','화','수','목','금','토'][day]})`;
+      const opt = document.createElement('option');
+      opt.value = `${y}-${m}-${d}`;
+      opt.textContent = label;
+      select.appendChild(opt);
+      count++;
+    }
+    cursor.setDate(cursor.getDate()+1);
+  }
+  if(count===0){
+    const opt=document.createElement('option');
+    opt.value=''; opt.textContent='선택 가능한 날짜가 없습니다 (운영 설정 확인)';
+    select.appendChild(opt);
+  }
+}
+
+/* ========= 저장/로드 ========= */
+function loadAll(){
+  try{
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+  }catch(e){ return []; }
+}
+function saveAll(list){
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(list));
+}
+function addSubmission(data){
+  const list = loadAll();
+  list.unshift(data);
+  saveAll(list);
+}
+
+/* ========= 폼 처리 ========= */
+function serializeForm(form){
+  const fd = new FormData(form);
+  // checkbox group
+  const targets = [];
+  form.querySelectorAll('input[name="target"]:checked').forEach(el=>targets.push(el.value));
+  return {
+    id: 'SUB' + Date.now(),
+    createdAt: todaySeoul().toISOString(),
+    org: fd.get('org')?.trim(),
+    aff: fd.get('aff')?.trim(),
+    headcount: fd.get('headcount')?.trim(),
+    leader: fd.get('leader')?.trim(),
+    phone: fd.get('phone')?.trim(),
+    email: fd.get('email')?.trim(),
+    carUse: fd.get('carUse'),
+    carNo: fd.get('carNo')?.trim(),
+    date: fd.get('date'),
+    time: fd.get('time'),
+    targets,
+    request: fd.get('request')?.trim(),
+    agree: !!fd.get('agree'),
+    status: '신규'
+  };
+}
+
+function validateDateRule(selValue){
+  if(!selValue) return false;
+  const d = new Date(selValue+'T00:00:00+09:00'); // Asia/Seoul
+  const now = todaySeoul();
+  const diff = Math.floor((d - now)/(1000*3600*24));
+  const day = d.getDay();
+  return diff >= 30 && (day===2 || day===5);
+}
+
+/* ========= 관리자 테이블 ========= */
+function renderTable(){
+  const q = ($('#q')?.value || '').toLowerCase();
+  const statusFilter = $('#statusFilter').value;
+  const tbody = $('#tbody');
+  const list = loadAll();
+  tbody.innerHTML = '';
+
+  list.filter(row=>{
+    const hit = [row.org,row.aff,row.leader,row.phone,row.email,row.date,row.time].join(' ').toLowerCase();
+    const qok = !q || hit.includes(q);
+    const sok = !statusFilter || row.status===statusFilter;
+    return qok && sok;
+  }).forEach(row=>{
+    const tr = document.createElement('tr');
+    tr.className='rowcard';
+    tr.innerHTML = `
+      <td>
+        <span class="status ${row.status==='신규'?'s-new':row.status==='확정'?'s-ok':'s-rej'}">${row.status}</span>
+      </td>
+      <td>
+        <div>${fmt(row.createdAt)}</div>
+        <div class="mini">${row.id}</div>
+      </td>
+      <td>${row.date} · ${row.time}</td>
+      <td><strong>${escapeHtml(row.org||'')}</strong><div class="mini">${escapeHtml(row.aff||'')}</div></td>
+      <td>${escapeHtml(row.leader||'')}</td>
+      <td>
+        <div>${escapeHtml(row.phone||'')}</div>
+        <div class="mini">${escapeHtml(row.email||'')}</div>
+      </td>
+      <td>${row.carUse}${row.carNo ? ' / '+escapeHtml(row.carNo):''}</td>
+      <td>
+        <div class="toolbar">
+          <button class="btn btn-ghost" data-action="status" data-id="${row.id}" data-val="확정">확정</button>
+          <button class="btn btn-ghost" data-action="status" data-id="${row.id}" data-val="반려">반려</button>
+          <button class="btn btn-ghost" data-action="status" data-id="${row.id}" data-val="신규">신규</button>
+          <button class="btn btn-ghost" data-action="del" data-id="${row.id}">삭제</button>
+          <button class="btn btn-ghost" data-action="view" data-id="${row.id}">보기</button>
+        </div>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function escapeHtml(s){ return (s||'').replace(/[&<>"']/g, m=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m])) }
+
+/* ========= CSV 내보내기 ========= */
+function exportCSV(){
+  const rows = loadAll();
+  const header = ['id','status','createdAt','date','time','org','aff','headcount','leader','phone','email','carUse','carNo','targets','request'];
+  const csv = [header.join(',')].concat(
+    rows.map(r=> header.map(k=>{
+      let v = k==='targets' ? (r[k]||[]).join('; ') : (r[k]??'');
+      v = (''+v).replace(/"/g,'""');
+      return `"${v}"`;
+    }).join(','))
+  ).join('\r\n');
+  const blob = new Blob([csv],{type:'text/csv;charset=utf-8;'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'cpbc_tour_submissions.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+
+/* ========= 이벤트 바인딩 ========= */
+document.addEventListener('DOMContentLoaded', ()=>{
+  // 날짜 옵션 구성
+  buildDateOptions();
+
+  // 차량 이용 선택
+  $('#carUse').addEventListener('change', e=>{
+    $('#carPlateWrap').style.display = e.target.value==='예' ? 'block' : 'none';
+  });
+
+  // 팝업/관리자
+  $('#openCarlo').addEventListener('click', ()=> $('#carloDlg').showModal());
+  $('#btnAdmin').addEventListener('click', ()=> $('#adminDlg').showModal());
+  $('#btnUnlock').addEventListener('click', ()=>{
+    const ok = $('#pinInput').value === ADMIN_PIN;
+    $('#pinMsg').textContent = ok ? '접속 성공' : 'PIN 불일치';
+    $('#adminArea').style.display = ok ? 'block' : 'none';
+    if(ok){ renderTable(); }
+  });
+
+  // 관리자 액션
+  $('#q').addEventListener('input', renderTable);
+  $('#statusFilter').addEventListener('change', renderTable);
+  $('#btnExport').addEventListener('click', exportCSV);
+  $('#btnClear').addEventListener('click', ()=>{
+    if(confirm('정말 전체 삭제하시겠습니까?')){ saveAll([]); renderTable(); }
+  });
+  $('#tbody').addEventListener('click', (e)=>{
+    const btn = e.target.closest('button[data-action]');
+    if(!btn) return;
+    const id = btn.dataset.id;
+    const action = btn.dataset.action;
+    const list = loadAll();
+    const idx = list.findIndex(x=>x.id===id);
+    if(idx<0) return;
+
+    if(action==='status'){
+      list[idx].status = btn.dataset.val;
+      saveAll(list); renderTable();
+    }else if(action==='del'){
+      if(confirm('삭제하시겠습니까?')){
+        list.splice(idx,1); saveAll(list); renderTable();
+      }
+    }else if(action==='view'){
+      const r = list[idx];
+      alert(
+`[상세 보기]
+상태: ${r.status}
+신청일시: ${fmt(r.createdAt)}
+희망일/시간: ${r.date} ${r.time}
+
+단체: ${r.org}
+소속: ${r.aff}
+인원: ${r.headcount}
+
+인솔자: ${r.leader}
+연락처: ${r.phone}
+이메일: ${r.email}
+
+차량: ${r.carUse}${r.carNo? ' / '+r.carNo:''}
+대상: ${ (r.targets||[]).join(', ') }
+요청: ${r.request||''}`
+      );
+    }
+  });
+
+  // 폼 제출
+  $('#applyForm').addEventListener('submit', (e)=>{
+    e.preventDefault();
+    const form = e.target;
+    if(!form.reportValidity()) return;
+
+    const data = serializeForm(form);
+    // 날짜 규칙 재검증
+    if(!validateDateRule(data.date)){
+      alert('선택한 날짜가 규정(신청일 기준 30일 이후, 화/금)에 맞지 않습니다.');
+      return;
+    }
+    // 최소 하나의 대상 체크
+    if((data.targets||[]).length===0){
+      alert('참가 대상을 최소 1개 이상 선택해주세요.');
+      return;
+    }
+    addSubmission(data);
+
+    // 확인 메시지
+    const msg = $('#submitMsg');
+    msg.style.display='block';
+    msg.textContent = '접수가 완료되었습니다. 담당자 확인 후 최종 확정 연락을 드립니다. 감사합니다!';
+    form.reset();
+    $('#carPlateWrap').style.display='none';
+    buildDateOptions();
+  });
+
+  // 초기화
+  $('#btnReset').addEventListener('click', ()=> {
+    if(confirm('작성 내용을 초기화할까요?')){
+      $('#applyForm').reset();
+      $('#carPlateWrap').style.display='none';
+      buildDateOptions();
+      $('#submitMsg').style.display='none';
+    }
+  });
+});
+</script>
+</body>
+</html>
