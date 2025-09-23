@@ -139,6 +139,62 @@
     </div>
   </section>
 
+    <!-- APPLY FORM -->
+  <section id="apply" class="border-t border-slate-200 bg-white">
+    <div class="mx-auto max-w-3xl px-4 py-12 md:py-16">
+      <h2 class="text-2xl font-bold md:text-3xl mb-6">신청서</h2>
+      <p class="mb-6 text-sm text-slate-600">아래 항목을 작성하여 신청해주세요. (구글폼 또는 별도 신청 시스템과 연결 예정)</p>
+      <form class="grid gap-4">
+        <label class="block">
+          <span class="text-sm font-medium text-slate-800">단체명 *</span>
+          <input class="mt-1 w-full rounded-xl border border-slate-300 p-3 text-sm" placeholder="예: ○○초등학교" required>
+        </label>
+        <label class="block">
+          <span class="text-sm font-medium text-slate-800">소속(본당/학교/기관 등) *</span>
+          <input class="mt-1 w-full rounded-xl border border-slate-300 p-3 text-sm" required>
+        </label>
+        <label class="block">
+          <span class="text-sm font-medium text-slate-800">참가 인원 *</span>
+          <input class="mt-1 w-full rounded-xl border border-slate-300 p-3 text-sm" placeholder="총 15명 (학생 13, 인솔자 2)" required>
+        </label>
+        <label class="block">
+          <span class="text-sm font-medium text-slate-800">대표 인솔자 성명 *</span>
+          <input class="mt-1 w-full rounded-xl border border-slate-300 p-3 text-sm" required>
+        </label>
+        <label class="block">
+          <span class="text-sm font-medium text-slate-800">연락처(휴대폰) *</span>
+          <input class="mt-1 w-full rounded-xl border border-slate-300 p-3 text-sm" placeholder="010-0000-0000" required>
+        </label>
+        <label class="block">
+          <span class="text-sm font-medium text-slate-800">이메일 *</span>
+          <input type="email" class="mt-1 w-full rounded-xl border border-slate-300 p-3 text-sm" placeholder="example@cpbc.co.kr" required>
+        </label>
+        <label class="block">
+          <span class="text-sm font-medium text-slate-800">희망 날짜 *</span>
+          <input type="date" class="mt-1 w-full rounded-xl border border-slate-300 p-3 text-sm" required>
+        </label>
+        <div>
+          <span class="text-sm font-medium text-slate-800">희망 시간 *</span>
+          <div class="mt-2 flex gap-4">
+            <label class="flex items-center gap-2 text-sm">
+              <input type="radio" name="time" value="10:00" required>
+              오전 10시
+            </label>
+            <label class="flex items-center gap-2 text-sm">
+              <input type="radio" name="time" value="14:00">
+              오후 2시
+            </label>
+          </div>
+        </div>
+        <label class="block">
+          <span class="text-sm font-medium text-slate-800">특별 요청사항</span>
+          <textarea class="mt-1 w-full rounded-xl border border-slate-300 p-3 text-sm" rows="4" placeholder="있으시면 자유롭게 작성해주세요"></textarea>
+        </label>
+        <button type="submit" class="mt-4 rounded-xl bg-blue-600 px-5 py-3 text-white shadow hover:bg-blue-700">제출하기</button>
+      </form>
+    </div>
+  </section>
+
   <!-- FOOTER -->
   <footer class="border-t border-slate-200">
     <div class="mx-auto max-w-6xl px-4 py-8 text-sm text-slate-600">
