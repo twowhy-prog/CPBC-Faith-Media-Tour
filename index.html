@@ -29,7 +29,12 @@
           </div>
         </div>
         <div class="relative rounded-3xl border border-slate-200 bg-white p-5 shadow-xl md:p-6">
-          <div class="aspect-[4/3] w-full rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-100"></div>
+          <div class="aspect-[4/3] w-full overflow-hidden rounded-2xl bg-slate-100">
+            <div id="slideshow" class="relative h-full w-full">
+              <!-- images will be injected by JS -->
+              <div class="absolute inset-0 flex items-center justify-center text-slate-400 text-sm">이미지 로딩 중…</div>
+            </div>
+          </div>
           <div class="mt-4 grid grid-cols-3 gap-3 text-center text-sm">
             <div class="rounded-xl bg-slate-50 p-3 ring-1 ring-inset ring-slate-200">
               <p class="font-semibold">소요시간</p>
@@ -202,5 +207,47 @@
       <p class="mt-1">문의: 서울시 중구 삼일대로 330 · (예시) 02-0000-0000</p>
     </div>
   </footer>
+<script>
+  // Simple fade slideshow for images named: 1 (1).jpg ~ 1 (8).jpg in the same directory
+  (function(){
+    const container = document.getElementById('slideshow');
+    if(!container) return;
+
+    const total = 8; // number of images
+    const sources = Array.from({length: total}, (_, i) => encodeURI(`1 (${i+1}).jpg`));
+
+    // Build img elements
+    const imgs = sources.map((src, idx) => {
+      const img = new Image();
+      img.src = src;
+      img.alt = `CPBC Gallery ${idx+1}`;
+      img.className = 'absolute inset-0 h-full w-full object-cover opacity-0 transition-opacity duration-1000';
+      container.appendChild(img);
+      return img;
+    });
+
+    let current = 0;
+    const show = (i) => {
+      imgs.forEach((im, k) => {
+        im.style.opacity = (k === i) ? '1' : '0';
+      });
+    };
+
+    // Start when first image loads
+    if(imgs[0]){
+      if (imgs[0].complete) {
+        show(0);
+      } else {
+        imgs[0].addEventListener('load', () => show(0));
+      }
+    }
+
+    // Cycle
+    setInterval(() => {
+      current = (current + 1) % imgs.length;
+      show(current);
+    }, 3500);
+  })();
+</script>
 </body>
 </html>
