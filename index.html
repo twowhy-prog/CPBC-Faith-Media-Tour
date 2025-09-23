@@ -1,543 +1,150 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
-<title>CPBC Faith & Media Tour | 신앙과 미디어 체험 견학</title>
-<style>
-  :root{
-    --brand:#2d4ea3; --brand2:#5c7ae0;
-    --bg:#f6f8fb; --card:#fff; --txt:#1b2333; --muted:#5d6b86;
-    --radius:16px; --shadow:0 10px 28px rgba(0,0,0,.08);
-  }
-  *{box-sizing:border-box}
-  html,body{margin:0;background:var(--bg);color:var(--txt);font-family:"Noto Sans KR",system-ui,Segoe UI,Arial,sans-serif;line-height:1.6}
-  a{color:inherit}
-  header{
-    position:sticky;top:0;z-index:40;background:linear-gradient(120deg,var(--brand),#1b2a6b);
-    color:#fff;padding:14px 16px;box-shadow:0 2px 12px rgba(0,0,0,.12)
-  }
-  .wrap{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:12px}
-  h1{margin:0;font-size:clamp(18px,2.2vw,24px);font-weight:800}
-  nav.pc{margin-left:auto;display:flex;gap:10px}
-  nav.pc a,.admin-btn{
-    color:#fff;text-decoration:none;padding:8px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.28);
-    font-weight:700;font-size:14px
-  }
-  .admin-btn{cursor:pointer;background:rgba(255,255,255,.06)}
-  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
-  .pill{display:inline-block;padding:2px 10px;border-radius:999px;background:#eef2ff;color:#334155;font-weight:800;font-size:12px}
-  .list li{margin:6px 0}
-  .note{background:#f1f5ff;border:1px solid #dbe3ff;border-radius:12px;padding:10px 12px;color:#233056}
-  /* ====== 데스크톱 레이아웃 ====== */
-  main.desktop{max-width:1100px;margin:26px auto;padding:0 16px}
-  .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:14px}
-  h2{font-size:20px;margin:10px 0 14px;border-left:6px solid var(--brand);padding-left:10px}
-  /* ====== 모바일: 가로 스와이프 슬라이드 ====== */
-  @media (max-width:900px){
-    nav.pc{display:none}
-    main.desktop{display:none}
-    header{padding:12px 14px}
-    h1{font-size:18px}
-    .slides{
-      scroll-snap-type:x mandatory; overflow-x:auto; overflow-y:hidden; white-space:nowrap;
-      display:flex; -webkit-overflow-scrolling:touch; gap:16px; padding:16px; scroll-behavior:smooth;
-    }
-    .slide{
-      scroll-snap-align:start; flex:0 0 calc(100vw - 32px); /* 좌우 여백 제외 풀폭 */
-      background:transparent; display:flex; flex-direction:column; gap:12px
-    }
-    .slide .card{padding:16px; border-radius:18px}
-    .slide h2{font-size:18px}
-    .spacer{height:74px} /* bottom bar 공간 확보 */
-    /* 하단 탭바 */
-    .tabbar{
-      position:fixed; left:0; right:0; bottom:0; z-index:45;
-      display:flex; justify-content:space-around; align-items:center;
-      background:#fff; box-shadow:0 -8px 18px rgba(0,0,0,.08); padding:8px env(safe-area-inset-left) 10px env(safe-area-inset-right);
-      border-top:1px solid #e9edf5
-    }
-    .tabbar button{
-      appearance:none; border:none; background:none; padding:8px 10px; border-radius:12px; font-weight:800; color:#334155;
-      display:flex; flex-direction:column; align-items:center; gap:4px; min-width:56px
-    }
-    .tabbar button.active{background:#eef2ff; color:#1d4ed8}
-    .tabbar .ico{font-size:18px; line-height:1}
-    /* 페이지 점 */
-    .dots{position:fixed; left:0; right:0; bottom:58px; display:flex; justify-content:center; gap:8px; z-index:44}
-    .dot{width:8px; height:8px; border-radius:999px; background:#d7dce6}
-    .dot.active{background:#2d4ea3; transform:scale(1.25)}
-    /* 터치 타겟 개선 */
-    .btn{padding:13px 16px; border-radius:12px; border:none; font-weight:800}
-    .btn-primary{background:var(--brand); color:#fff}
-    .btn-ghost{background:#eef2ff; color:#1e293b}
-  }
-  /* 공용 폼 */
-  form label{display:block;margin:12px 0 6px;font-weight:700}
-  form input[type="text"],form input[type="tel"],form input[type="email"],form textarea,form select{
-    width:100%;padding:12px;border:1px solid #d7dce6;border-radius:12px;font-size:15px;outline:none;transition:.2s
-  }
-  form input:focus,form select:focus,form textarea:focus{border-color:var(--brand);box-shadow:0 0 0 4px rgba(45,78,163,.12)}
-  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  @media (max-width:900px){ .row{grid-template-columns:1fr} }
-  /* 관리자/모달 */
-  dialog{border:none;border-radius:18px;box-shadow:0 30px 60px rgba(0,0,0,.25);max-width:980px;width:calc(100% - 24px);padding:0}
-  .dlg-head{display:flex;justify-content:space-between;align-items:center;padding:16px 18px;border-bottom:1px solid #e7ebf5}
-  .dlg-body{padding:18px}
-  .table{width:100%;border-collapse:separate;border-spacing:0 8px}
-  .table th{font-size:13px;text-align:left;color:#475569}
-  .table td,.table th{padding:10px 10px}
-  .rowcard{background:#fff;border:1px solid #e7ebf5;border-radius:12px}
-  .status{font-size:12px;font-weight:900;padding:6px 10px;border-radius:999px}
-  .s-new{background:#eef2ff;color:#1d4ed8}.s-ok{background:#e7f8ef;color:#166534}.s-rej{background:#fdecec;color:#b91c1c}
-  .mini{font-size:12px;color:#64748b}
-  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 6px}
-  .search{flex:1 1 220px}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CPBC 견학 프로그램</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <header>
-    <div class="wrap">
-      <h1>CPBC Faith & Media Tour | 신앙과 미디어 체험 견학</h1>
-      <nav class="pc">
-        <a href="#s-intro">소개</a><a href="#s-course">코스</a><a href="#s-guide">운영안내</a>
-        <a href="#s-holy">주변성지</a><a href="#s-visit">오시는 길</a><a href="#s-apply">신청</a>
-      </nav>
-      <button class="admin-btn" id="btnAdmin">관리자 모드</button>
-    </div>
-  </header>
-
-  <!-- 데스크톱: 기존 그리드(요약) -->
-  <main class="desktop" id="desktop">
-    <section id="s-intro" class="grid">
-      <div class="card" style="grid-column:span 7">
-        <h2>소개</h2>
-        <p>가톨릭평화방송(CPBC)은 사랑과 나눔의 가치를 실천하며 복음의 메시지를 전하는 미디어 사도직을 수행하고 있습니다. CPBC 견학 프로그램은 방송 현장을 직접 체험하고, 신앙과 미디어가 함께하는 특별한 시간을 상시로 제공합니다.</p>
-        <p>특히 본사에 모신 <strong>성 카를로 아쿠티스 성상</strong> 앞에서 디지털 시대의 신앙인의 역할을 함께 배우고 묵상합니다.</p>
-        <p><button class="btn btn-ghost" id="openCarlo">[성 카를로 아쿠티스 성인의 의미]</button></p>
-      </div>
-      <div class="card" style="grid-column:span 5">
-        <h2>핵심 안내</h2>
-        <ul class="list">
-          <li><span class="pill">대상</span> 초등학생 이상 / 교회·교육·공공·시민단체</li>
-          <li><span class="pill">인원</span> 10~15명</li>
-          <li><span class="pill">일정</span> 매주 화/금, 오전 10시 · 오후 2시</li>
-          <li><span class="pill">장소</span> 서울 중구 삼일대로 330</li>
-          <li><span class="pill">비용</span> 무료</li>
-          <li class="note">※ 방문 희망일 <strong>최소 30일 전</strong> 신청 필수, 확인 후 최종 확정</li>
-        </ul>
-      </div>
-    </section>
-    <section id="s-course" class="grid">
-      <div class="card" style="grid-column:span 12">
-        <h2>견학 코스 (약 1~1.5시간)</h2>
-        <div class="grid">
-          <div class="card" style="grid-column:span 4"><h3>① 역사 전시실</h3><p>설립 배경·사명, CPBC 소개 영상</p></div>
-          <div class="card" style="grid-column:span 4"><h3>② 성상 앞 체험</h3><p>성인의 삶·영성, 묵상, 디지털 신앙</p></div>
-          <div class="card" style="grid-column:span 4"><h3>③ 스튜디오</h3><p>카메라/오디오 체험</p></div>
-        </div>
-      </div>
-    </section>
-    <section id="s-guide" class="grid">
-      <div class="card" style="grid-column:span 12">
-        <h2>운영 안내</h2>
-        <ul class="list">
-          <li>대상: 초등학생 이상 / 교회기관·교육기관·공공기관·시민단체 등</li>
-          <li>인원: 10~15명 소규모 그룹</li>
-          <li>일정: 매주 화·금 (오전 10시/오후 2시)</li>
-          <li>장소: 서울시 중구 삼일대로 330</li>
-          <li>비용: 무료</li>
-          <li>신청: 최소 30일 전 접수 → 일정 확정</li>
-        </ul>
-      </div>
-    </section>
-    <section id="s-holy" class="grid">
-      <div class="card" style="grid-column:span 12">
-        <h2>주변 성지 안내</h2>
-        <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px">
-          <div class="card"><strong><a href="https://www.mdsd.or.kr/" target="_blank" rel="noopener">명동대성당</a></strong><p class="mini">도보 15~20분</p></div>
-          <div class="card"><strong><a href="http://www.yakhyeon.or.kr" target="_blank" rel="noopener">약현성당</a></strong><p class="mini">1892, 벽돌 성당</p></div>
-          <div class="card"><strong><a href="https://www.seosomun.org" target="_blank" rel="noopener">서소문성지역사박물관</a></strong><p class="mini">순교 역사·하늘광장</p></div>
-          <div class="card"><strong><a href="http://saenamteo.or.kr" target="_blank" rel="noopener">새남터 순교성지</a></strong><p class="mini">기념관 운영</p></div>
-        </div>
-      </div>
-    </section>
-    <section id="s-visit" class="grid">
-      <div class="card" style="grid-column:span 12">
-        <h2>오시는 길</h2>
-        <ul class="list">
-          <li>지하철: 2호선 을지로3가(12번) 5분 / 3호선 충무로(7번) 7분</li>
-          <li>버스: 을지로입구/퇴계로 인근</li>
-          <li>승용차: 인솔자 1대 무료(버스/승합 불가)</li>
-        </ul>
-      </div>
-    </section>
-    <section id="s-apply" class="grid">
-      <div class="card" style="grid-column:span 12">
-        <h2>신청서 작성</h2>
-        <!-- 폼은 아래 모바일 섹션과 동일 요소 사용 -->
-        <div id="formMountDesktop"></div>
-      </div>
-    </section>
-  </main>
-
-  <!-- 모바일 슬라이드 -->
-  <div class="slides" id="slides" aria-label="CPBC 투어 슬라이드">
-    <!-- 1: 소개 -->
-    <section class="slide" data-idx="0">
-      <div class="card">
-        <h2>소개</h2>
-        <p>가톨릭평화방송(CPBC)은 사랑과 나눔의 가치를 실천하며 복음의 메시지를 전하는 미디어 사도직을 수행합니다. 본 견학은 방송 현장을 체험하고 신앙과 미디어가 만나는 시간을 제공합니다.</p>
-        <p>본사 <strong>성 카를로 아쿠티스 성상</strong> 앞에서 디지털 시대 신앙인의 삶을 함께 배우고 묵상합니다.</p>
-        <button class="btn btn-ghost" id="openCarloM">[성 카를로 아쿠티스 성인의 의미]</button>
-      </div>
-      <div class="card">
-        <h2>핵심 안내</h2>
-        <ul class="list">
-          <li><span class="pill">대상</span> 초등 이상 / 교회·교육·공공·시민단체</li>
-          <li><span class="pill">인원</span> 10~15명</li>
-          <li><span class="pill">일정</span> 화·금 / 10:00·14:00</li>
-          <li><span class="pill">장소</span> 서울 중구 삼일대로 330</li>
-          <li><span class="pill">비용</span> 무료</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- 2: 코스 -->
-    <section class="slide" data-idx="1">
-      <div class="card"><h2>견학 코스 (약 1~1.5h)</h2></div>
-      <div class="card"><h3>① 역사 전시실</h3><p>CPBC 설립 배경·사명, 소개 영상</p></div>
-      <div class="card"><h3>② 성상 앞 체험</h3><p>성인의 삶/영성, 묵상, 디지털 신앙</p></div>
-      <div class="card"><h3>③ 스튜디오</h3><p>카메라·오디오 장비 체험</p></div>
-    </section>
-
-    <!-- 3: 운영 안내 -->
-    <section class="slide" data-idx="2">
-      <div class="card">
-        <h2>운영 안내</h2>
-        <ul class="list">
-          <li>대상: 초등학생 이상 단체</li>
-          <li>인원: 10~15명 소규모</li>
-          <li>일정: 매주 화·금 (10시/14시)</li>
-          <li>장소: 서울 중구 삼일대로 330</li>
-          <li>비용: 무료</li>
-          <li class="note">※ 희망일 최소 30일 전 신청 · 담당자 확인 후 확정</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- 4: 주변 성지 -->
-    <section class="slide" data-idx="3">
-      <div class="card"><h2>주변 성지 안내</h2></div>
-      <div class="card"><strong><a href="https://www.mdsd.or.kr/" target="_blank" rel="noopener">명동대성당</a></strong><p class="mini">도보 15~20분</p></div>
-      <div class="card"><strong><a href="http://www.yakhyeon.or.kr" target="_blank" rel="noopener">약현성당</a></strong><p class="mini">1892 벽돌 성당</p></div>
-      <div class="card"><strong><a href="https://www.seosomun.org" target="_blank" rel="noopener">서소문성지역사박물관</a></strong><p class="mini">순교 역사·하늘광장</p></div>
-      <div class="card"><strong><a href="http://saenamteo.or.kr" target="_blank" rel="noopener">새남터 순교성지</a></strong><p class="mini">기념관 운영</p></div>
-    </section>
-
-    <!-- 5: 오시는 길 -->
-    <section class="slide" data-idx="4">
-      <div class="card">
-        <h2>오시는 길</h2>
-        <ul class="list">
-          <li>지하철: 2호선 을지로3가(12번) 5분 / 3호선 충무로(7번) 7분</li>
-          <li>버스: 을지로입구/퇴계로 인근</li>
-          <li>차량: 인솔자 1대 무료(버스/승합 불가)</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- 6: 신청서 -->
-    <section class="slide" data-idx="5">
-      <div class="card"><h2>신청서 작성</h2><div id="formMountMobile"></div></div>
-      <div class="spacer"></div>
-    </section>
-  </div>
-
-  <!-- 페이지 점 -->
-  <div class="dots" id="dots" aria-hidden="true"></div>
-
-  <!-- 하단 탭바 -->
-  <div class="tabbar" id="tabbar" role="tablist" aria-label="섹션 내비게이션">
-    <button data-go="0" class="active" role="tab" aria-selected="true"><span class="ico">🏠</span><span>소개</span></button>
-    <button data-go="1" role="tab"><span class="ico">🧭</span><span>코스</span></button>
-    <button data-go="2" role="tab"><span class="ico">📋</span><span>안내</span></button>
-    <button data-go="3" role="tab"><span class="ico">⛪</span><span>성지</span></button>
-    <button data-go="4" role="tab"><span class="ico">🗺️</span><span>오시는길</span></button>
-    <button data-go="5" role="tab"><span class="ico">📝</span><span>신청</span></button>
-  </div>
-
-  <!-- 성 카를로 아쿠티스 모달 -->
-  <dialog id="carloDlg">
-    <div class="dlg-head">
-      <strong>성 카를로 아쿠티스 (1991–2006)</strong>
-      <button class="admin-btn" onclick="document.getElementById('carloDlg').close()">닫기 ✕</button>
-    </div>
-    <div class="dlg-body">
-      <p>성 카를로 아쿠티스는 전 세계 성체 기적을 온라인으로 아카이브화한 디지털 복음화의 모범입니다. CPBC는 성인을 제2주보성인으로 모시고 성상을 통해 신앙과 미디어 사도직의 본보기를 삼고 있습니다.</p>
-    </div>
-  </dialog>
-
-  <!-- 관리자 패널 -->
-  <dialog id="adminDlg">
-    <div class="dlg-head">
-      <strong>관리자 패널 · CPBC 견학 신청 관리</strong>
-      <button class="admin-btn" onclick="document.getElementById('adminDlg').close()">닫기 ✕</button>
-    </div>
-    <div class="dlg-body">
-      <details open>
-        <summary>접속</summary>
-        <div style="display:flex;gap:10px;align-items:center;margin:10px 0 6px">
-          <label>PIN</label>
-          <input type="password" id="pinInput" placeholder="cpbc2025" />
-          <button class="admin-btn" id="btnUnlock" style="background:#eef2ff;color:#1e293b;border:1px solid #d7dce6">접속</button>
-          <span id="pinMsg" class="mini"></span>
-        </div>
-      </details>
-      <div id="adminArea" style="display:none">
-        <div class="toolbar">
-          <input class="search" type="search" id="q" placeholder="검색: 단체/인솔자/연락처/이메일/날짜" />
-          <select id="statusFilter">
-            <option value="">상태(전체)</option><option value="신규">신규</option><option value="확정">확정</option><option value="반려">반려</option>
-          </select>
-          <div style="margin-left:auto">
-            <button class="admin-btn" id="btnExport">CSV 내보내기</button>
-            <button class="admin-btn" id="btnClear">전체 삭제</button>
+<body class="bg-gradient-to-b from-white to-slate-50 text-slate-900">
+  <!-- HERO -->
+  <section class="relative overflow-hidden">
+    <div class="mx-auto max-w-6xl px-4 py-14 md:py-20">
+      <div class="grid gap-8 md:grid-cols-2 md:items-center">
+        <div>
+          <span class="inline-flex items-center rounded-full bg-blue-50 px-3 py-1 text-sm text-blue-700 ring-1 ring-inset ring-blue-200">
+            CPBC 견학 프로그램
+          </span>
+          <h1 class="mt-4 text-3xl font-extrabold tracking-tight md:text-5xl">
+            신앙과 미디어가 만나는 시간
+          </h1>
+          <p class="mt-4 text-base leading-relaxed md:text-lg">
+            성 <b>카를로 아쿠티스</b> 성상을 중심으로, 방송 체험과 묵상이 함께하는
+            90분 프로그램. 디지털 시대 복음 전파의 모범을 만나보세요.
+          </p>
+          <div class="mt-6 flex flex-wrap gap-3">
+            <a href="#apply" class="rounded-xl bg-blue-600 px-5 py-3 text-white shadow hover:bg-blue-700">신청하기</a>
+            <a href="#course" class="rounded-xl border border-slate-300 px-5 py-3 hover:bg-white">코스 보기</a>
+            <a href="#akutis" class="rounded-xl border border-amber-300 bg-amber-50 px-5 py-3 text-amber-800">아쿠티스가 누구인가요?</a>
           </div>
         </div>
-        <table class="table" id="tbl">
-          <thead><tr><th>상태</th><th>신청일시</th><th>희망일/시간</th><th>단체/소속</th><th>인솔자</th><th>연락처/이메일</th><th>차량</th><th></th></tr></thead>
-          <tbody id="tbody"></tbody>
-        </table>
-      </div>
-    </div>
-  </dialog>
-
-<script>
-/* ===== 설정/스토리지 ===== */
-const ADMIN_PIN='cpbc2025';
-const STORAGE_KEY='cpbc_tour_submissions_v1';
-const $=(s,r=document)=>r.querySelector(s); const $$=(s,r=document)=>[...r.querySelectorAll(s)];
-const fmt=(d)=>new Date(d).toLocaleString('ko-KR',{hour12:false});
-const todaySeoul=()=>{const n=new Date(),u=n.getTime()+n.getTimezoneOffset()*60000;return new Date(u+9*3600000)}
-function loadAll(){try{return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]')}catch(e){return[]}}
-function saveAll(v){localStorage.setItem(STORAGE_KEY,JSON.stringify(v))}
-function addSubmission(d){const L=loadAll();L.unshift(d);saveAll(L)}
-function escapeHtml(s){return (s||'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]))}
-
-/* ===== 날짜(30일 이후 & 화/금) ===== */
-function buildDateOptions(select){
-  select.innerHTML='';
-  const now=todaySeoul(), start=new Date(now.getFullYear(),now.getMonth(),now.getDate()); start.setDate(start.getDate()+30);
-  const end=new Date(start); end.setMonth(end.getMonth()+6);
-  let cur=new Date(start), cnt=0;
-  while(cur<=end){
-    const d=cur.getDay(); if(d===2||d===5){
-      const y=cur.getFullYear(), m=String(cur.getMonth()+1).padStart(2,'0'), dd=String(cur.getDate()).padStart(2,'0');
-      const opt=document.createElement('option'); opt.value=`${y}-${m}-${dd}`; opt.textContent=`${y}-${m}-${dd} (${['일','월','화','수','목','금','토'][d]})`;
-      select.appendChild(opt); cnt++;
-    }
-    cur.setDate(cur.getDate()+1);
-  }
-  if(!cnt){ const o=document.createElement('option'); o.value=''; o.textContent='선택 가능한 날짜 없음'; select.appendChild(o) }
-}
-function validateDateRule(val){
-  if(!val) return false; const d=new Date(val+'T00:00:00+09:00'), now=todaySeoul();
-  const diff=Math.floor((d-now)/(1000*3600*24)), day=d.getDay(); return diff>=30 && (day===2||day===5);
-}
-
-/* ===== 폼 컴포넌트 (중복mount: 데스크톱/모바일) ===== */
-function createForm(){
-  const wrap=document.createElement('div');
-  wrap.innerHTML=`
-  <form id="applyForm" novalidate>
-    <div class="row">
-      <div><label>단체명 *</label><input type="text" name="org" required placeholder="예: 서울 ○○초 5학년"></div>
-      <div><label>소속(본당/학교/기관 등) *</label><input type="text" name="aff" required></div>
-    </div>
-    <label>참가 인원 *</label><input type="text" name="headcount" required placeholder="예: 총 15명 / 학생 13, 인솔자 2">
-
-    <div class="row">
-      <div><label>대표 인솔자 성명 *</label><input type="text" name="leader" required></div>
-      <div><label>연락처(휴대폰) *</label><input type="tel" name="phone" required pattern="^0\\d{1,2}-?\\d{3,4}-?\\d{4}$" placeholder="010-1234-5678"></div>
-    </div>
-    <div class="row">
-      <div><label>이메일 *</label><input type="email" name="email" required placeholder="example@cpbc.co.kr"></div>
-      <div>
-        <label>차량 이용 여부 *</label>
-        <select name="carUse" id="carUse" required><option value="">선택</option><option>예</option><option>아니오</option></select>
-      </div>
-    </div>
-    <div id="carPlateWrap" style="display:none">
-      <label>차량번호 (차량 이용 시)</label><input type="text" name="carNo" placeholder="12가3456">
-    </div>
-
-    <div class="row">
-      <div>
-        <label>희망 날짜 *</label>
-        <select name="date" id="dateSelect" required></select>
-        <div class="mini">오늘 기준 30일 이후, 화/금만 선택 가능</div>
-      </div>
-      <div>
-        <label>희망 시간 *</label>
-        <select name="time" required><option>오전 10시</option><option>오후 2시</option></select>
-      </div>
-    </div>
-
-    <label>참가 대상 *(복수 선택)</label>
-    <div class="row">
-      <label><input type="checkbox" name="target" value="학생 단체"> 초등학생 이상 학생 단체</label>
-      <label><input type="checkbox" name="target" value="교회/본당"> 교회기관 / 본당 단체</label>
-      <label><input type="checkbox" name="target" value="교육기관"> 교육기관</label>
-      <label><input type="checkbox" name="target" value="공공/시민"> 공공기관 / 시민단체</label>
-      <label><input type="checkbox" name="target" value="기타"> 기타</label>
-    </div>
-
-    <label>특별 요청사항</label>
-    <textarea name="request" rows="4" placeholder="알레르기, 이동 보조, 사진 촬영 등"></textarea>
-
-    <label>안내 및 동의 *</label>
-    <div class="note" style="margin:.4rem 0 .6rem">
-      · 프로그램은 무료입니다.<br>· 내부 사정/공휴일엔 일정이 조정될 수 있습니다.<br>
-      · 인솔자 1인 동행 필수, 방송 중 사진 촬영 제한 가능.<br>
-      · 희망일 최소 30일 전 신청 · 담당자 확인 후 최종 확정됩니다.
-    </div>
-    <label><input type="checkbox" name="agree" required> 네, 위 내용을 확인하였습니다.</label>
-
-    <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
-      <button type="submit" class="btn btn-primary">신청서 제출</button>
-      <button type="button" class="btn btn-ghost" id="btnReset">작성 초기화</button>
-    </div>
-    <div id="submitMsg" class="note" style="display:none;margin-top:10px"></div>
-  </form>`;
-  // 동작 바인딩
-  const form=$('#applyForm',wrap);
-  const carUse=$('#carUse',wrap), carWrap=$('#carPlateWrap',wrap), dateSel=$('#dateSelect',wrap);
-  buildDateOptions(dateSel);
-  carUse.addEventListener('change',e=>{carWrap.style.display=e.target.value==='예'?'block':'none'});
-  form.addEventListener('submit',e=>{
-    e.preventDefault(); if(!form.reportValidity()) return;
-    const fd=new FormData(form); const targets=[...form.querySelectorAll('input[name="target"]:checked')].map(x=>x.value);
-    const data={
-      id:'SUB'+Date.now(), createdAt:todaySeoul().toISOString(),
-      org:fd.get('org')?.trim(), aff:fd.get('aff')?.trim(), headcount:fd.get('headcount')?.trim(),
-      leader:fd.get('leader')?.trim(), phone:fd.get('phone')?.trim(), email:fd.get('email')?.trim(),
-      carUse:fd.get('carUse'), carNo:fd.get('carNo')?.trim(), date:fd.get('date'), time:fd.get('time'),
-      targets, request:fd.get('request')?.trim(), agree:!!fd.get('agree'), status:'신규'
-    };
-    if(!validateDateRule(data.date)){ alert('선택한 날짜가 규정(30일 이후, 화/금)에 맞지 않습니다.'); return; }
-    if(targets.length===0){ alert('참가 대상을 1개 이상 선택해주세요.'); return; }
-    addSubmission(data);
-    const msg=$('#submitMsg',wrap); msg.style.display='block';
-    msg.textContent='접수되었습니다. 담당자 확인 후 최종 확정 연락을 드립니다.';
-    form.reset(); carWrap.style.display='none'; buildDateOptions(dateSel);
-  });
-  $('#btnReset',wrap).addEventListener('click',()=>{ if(confirm('초기화할까요?')){ form.reset(); carWrap.style.display='none'; buildDateOptions(dateSel); $('#submitMsg',wrap).style.display='none'; }});
-  return wrap;
-}
-
-/* ===== 관리자 ===== */
-function renderTable(){
-  const q=($('#q')?.value||'').toLowerCase(), f=$('#statusFilter').value, tb=$('#tbody'), L=loadAll();
-  tb.innerHTML='';
-  L.filter(r=>{
-    const hit=[r.org,r.aff,r.leader,r.phone,r.email,r.date,r.time].join(' ').toLowerCase();
-    return (!q||hit.includes(q)) && (!f||r.status===f);
-  }).forEach(r=>{
-    const tr=document.createElement('tr'); tr.className='rowcard';
-    tr.innerHTML=`
-      <td><span class="status ${r.status==='신규'?'s-new':r.status==='확정'?'s-ok':'s-rej'}">${r.status}</span></td>
-      <td><div>${fmt(r.createdAt)}</div><div class="mini">${r.id}</div></td>
-      <td>${r.date} · ${r.time}</td>
-      <td><strong>${escapeHtml(r.org||'')}</strong><div class="mini">${escapeHtml(r.aff||'')}</div></td>
-      <td>${escapeHtml(r.leader||'')}</td>
-      <td><div>${escapeHtml(r.phone||'')}</div><div class="mini">${escapeHtml(r.email||'')}</div></td>
-      <td>${r.carUse}${r.carNo?' / '+escapeHtml(r.carNo):''}</td>
-      <td>
-        <div class="toolbar">
-          <button class="admin-btn" data-action="status" data-id="${r.id}" data-val="확정">확정</button>
-          <button class="admin-btn" data-action="status" data-id="${r.id}" data-val="반려">반려</button>
-          <button class="admin-btn" data-action="status" data-id="${r.id}" data-val="신규">신규</button>
-          <button class="admin-btn" data-action="del" data-id="${r.id}">삭제</button>
-          <button class="admin-btn" data-action="view" data-id="${r.id}">보기</button>
+        <div class="relative rounded-3xl border border-slate-200 bg-white p-5 shadow-xl md:p-6">
+          <div class="aspect-[4/3] w-full rounded-2xl bg-gradient-to-br from-blue-100 to-indigo-100"></div>
+          <div class="mt-4 grid grid-cols-3 gap-3 text-center text-sm">
+            <div class="rounded-xl bg-slate-50 p-3 ring-1 ring-inset ring-slate-200">
+              <p class="font-semibold">소요시간</p>
+              <p class="text-slate-600">약 1~1.5시간</p>
+            </div>
+            <div class="rounded-xl bg-slate-50 p-3 ring-1 ring-inset ring-slate-200">
+              <p class="font-semibold">대상</p>
+              <p class="text-slate-600">초등학생 이상</p>
+            </div>
+            <div class="rounded-xl bg-slate-50 p-3 ring-1 ring-inset ring-slate-200">
+              <p class="font-semibold">비용</p>
+              <p class="text-slate-600">무료</p>
+            </div>
+          </div>
         </div>
-      </td>`;
-    tb.appendChild(tr);
-  });
-}
-function exportCSV(){
-  const rows=loadAll(), header=['id','status','createdAt','date','time','org','aff','headcount','leader','phone','email','carUse','carNo','targets','request'];
-  const csv=[header.join(',')].concat(rows.map(r=>header.map(k=>`"${((''+(k==='targets'?(r[k]||[]).join('; '):r[k]??'')).replace(/"/g,'""'))}"`).join(','))).join('\r\n');
-  const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'}), url=URL.createObjectURL(blob); const a=document.createElement('a');
-  a.href=url; a.download='cpbc_tour_submissions.csv'; document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
-}
+      </div>
+    </div>
+  </section>
 
-/* ===== 슬라이드 내비 ===== */
-function setupSlides(){
-  const scroller=$('#slides'); const slides=$$('.slide',scroller);
-  // 점 생성
-  const dots=$('#dots'); dots.innerHTML=''; slides.forEach((_,i)=>{const d=document.createElement('div'); d.className='dot'+(i===0?' active':''); dots.appendChild(d);});
-  const tabbar=$('#tabbar'); tabbar.addEventListener('click',e=>{
-    const btn=e.target.closest('button[data-go]'); if(!btn) return;
-    const idx=+btn.dataset.go; const target=slides[idx]; if(!target) return;
-    target.scrollIntoView({behavior:'smooth', inline:'start', block:'nearest'});
-  });
-  const btns=$$('button[data-go]',tabbar); const dotEls=$$('.dot',dots);
+  <!-- AKUTIS SECTION -->
+  <section id="akutis" class="border-y border-slate-200 bg-amber-50/60">
+    <div class="mx-auto max-w-6xl px-4 py-12 md:py-16">
+      <h2 class="text-2xl font-bold md:text-3xl">성 카를로 아쿠티스의 의미</h2>
+      <p class="mt-3 leading-relaxed text-slate-800">
+        성 카를로 아쿠티스(1991–2006)는 어린 나이에 인터넷을 활용해 전 세계 성체
+        기적을 아카이브화하며 온라인 복음 전파의 모범이 되었습니다. CPBC는 성인을
+        제2주보 성인으로 모시고 본사 성상을 세워, 신앙과 미디어 사도직의 본보기를
+        삼고 있습니다.
+      </p>
+    </div>
+  </section>
 
-  let ticking=false;
-  scroller.addEventListener('scroll',()=>{
-    if(ticking) return; ticking=true; requestAnimationFrame(()=>{
-      // 현재 슬라이드 인덱스 계산(가운데 기준)
-      const x=scroller.scrollLeft, w=scroller.clientWidth;
-      const idx=Math.round(x/(w+16)); // gap 고려
-      btns.forEach((b,i)=>b.classList.toggle('active',i===idx));
-      dotEls.forEach((d,i)=>d.classList.toggle('active',i===idx));
-      ticking=false;
-    });
-  },{passive:true});
-}
+  <!-- COURSE -->
+  <section id="course">
+    <div class="mx-auto max-w-6xl px-4 py-12 md:py-16">
+      <h2 class="text-2xl font-bold md:text-3xl">견학 코스 (약 1~1.5시간)</h2>
+      <div class="mt-6 grid gap-4 md:grid-cols-3">
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center gap-2 text-sm text-blue-700">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 font-bold">①</span>
+            <span class="font-semibold">역사 전시실 / CPBC 소개 + 아쿠티스 영상 (25~30분)</span>
+          </div>
+          <ul class="mt-3 list-disc space-y-2 pl-6 text-sm text-slate-700">
+            <li>CPBC 설립 배경과 사명(1988년 창립, 미디어 사도직)</li>
+            <li>라디오·TV·신문·뉴미디어를 통한 복음 선교 발자취 영상 시청</li>
+            <li>성 카를로 아쿠티스 소개 영상 전시실에서 연속 시청</li>
+          </ul>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center gap-2 text-sm text-blue-700">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 font-bold">②</span>
+            <span class="font-semibold">성 카를로 아쿠티스 성상 앞 체험·묵상 (10~15분)</span>
+          </div>
+          <ul class="mt-3 list-disc space-y-2 pl-6 text-sm text-slate-700">
+            <li>성인의 삶과 영성, 온라인 복음 전파의 의미 되새김</li>
+            <li>성상 앞 안내 및 짧은 묵상</li>
+            <li>디지털 시대 속 신앙인의 삶에 대한 나눔/질의응답</li>
+          </ul>
+        </div>
+        <div class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+          <div class="flex items-center gap-2 text-sm text-blue-700">
+            <span class="inline-flex h-6 w-6 items-center justify-center rounded-full bg-blue-100 font-bold">③</span>
+            <span class="font-semibold">방송 스튜디오 체험 (30~35분)</span>
+          </div>
+          <ul class="mt-3 list-disc space-y-2 pl-6 text-sm text-slate-700">
+            <li>방송기술 소개(카메라·오디오·스위처·조명 등)</li>
+            <li>카메라 촬영, 오디오 녹음 등 실습 위주 체험</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
-/* ===== 초기화 ===== */
-document.addEventListener('DOMContentLoaded',()=>{
-  // 폼 mount (데스크톱/모바일 둘 다)
-  $('#formMountDesktop').appendChild(createForm());
-  $('#formMountMobile').appendChild(createForm());
+  <!-- HOW TO JOIN -->
+  <section id="info" class="border-y border-slate-200 bg-slate-50/60">
+    <div class="mx-auto max-w-6xl px-4 py-12 md:py-16">
+      <h2 class="text-2xl font-bold md:text-3xl">참여 안내</h2>
+      <div class="mt-6 grid gap-6 md:grid-cols-3">
+        <div class="rounded-2xl bg-white p-5 shadow ring-1 ring-slate-200">
+          <h3 class="font-semibold">대상 · 인원</h3>
+          <p class="mt-2 text-sm text-slate-700">초등학생 이상 / 소규모 10~15명</p>
+          <h3 class="mt-4 font-semibold">일정</h3>
+          <p class="mt-2 text-sm text-slate-700">매주 수요일 10:00 / 14:00 (약 90분)</p>
+          <h3 class="mt-4 font-semibold">장소</h3>
+          <p class="mt-2 text-sm text-slate-700">서울시 중구 삼일대로 330 (CPBC 본사)</p>
+          <h3 class="mt-4 font-semibold">비용</h3>
+          <p class="mt-2 text-sm text-emerald-700">무료</p>
+        </div>
+        <div class="rounded-2xl bg-white p-5 shadow ring-1 ring-slate-200">
+          <h3 class="font-semibold">유의사항</h3>
+          <ul class="mt-2 list-disc space-y-2 pl-5 text-sm text-slate-700">
+            <li>방문 희망일 <b>최소 30일 전</b> 신청</li>
+            <li>방송사 내부 사정/공휴일에 일정 조정 가능</li>
+            <li>인솔자 1인 필수 동행</li>
+            <li>생방송 중 사진 촬영 제한</li>
+          </ul>
+        </div>
+        <div class="rounded-2xl bg-white p-5 shadow ring-1 ring-slate-200">
+          <h3 class="font-semibold">오시는 길</h3>
+          <ul class="mt-2 list-disc space-y-2 pl-5 text-sm text-slate-700">
+            <li>지하철: 2호선 을지로3가(12번 출구) 도보 5분 / 3호선 충무로(7번 출구) 도보 7분</li>
+            <li>버스: 을지로입구/퇴계로 인근 정류장 하차 후 도보</li>
+            <li>승용차: 인솔자 차량 1대 무료(승합·버스 불가, 추가 유료)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  // 모달
-  $('#openCarlo')?.addEventListener('click',()=>$('#carloDlg').showModal());
-  $('#openCarloM')?.addEventListener('click',()=>$('#carloDlg').showModal());
-
-  // 관리자
-  $('#btnAdmin').addEventListener('click',()=>$('#adminDlg').showModal());
-  $('#btnUnlock').addEventListener('click',()=>{
-    const ok=$('#pinInput').value===ADMIN_PIN; $('#pinMsg').textContent=ok?'접속 성공':'PIN 불일치';
-    $('#adminArea').style.display=ok?'block':'none'; if(ok) renderTable();
-  });
-  $('#q').addEventListener('input',renderTable);
-  $('#statusFilter').addEventListener('change',renderTable);
-  $('#btnExport').addEventListener('click',exportCSV);
-  $('#btnClear').addEventListener('click',()=>{ if(confirm('정말 전체 삭제?')){ saveAll([]); renderTable(); }});
-  $('#tbody').addEventListener('click',e=>{
-    const btn=e.target.closest('button[data-action]'); if(!btn) return;
-    const id=btn.dataset.id, act=btn.dataset.action; const L=loadAll(); const i=L.findIndex(x=>x.id===id); if(i<0) return;
-    if(act==='status'){ L[i].status=btn.dataset.val; saveAll(L); renderTable(); }
-    else if(act==='del'){ if(confirm('삭제할까요?')){ L.splice(i,1); saveAll(L); renderTable(); } }
-    else if(act==='view'){ const r=L[i];
-      alert(`[상세]
-상태: ${r.status}
-신청일시: ${fmt(r.createdAt)}
-희망: ${r.date} ${r.time}
-단체: ${r.org} / ${r.aff}
-인원: ${r.headcount}
-인솔자: ${r.leader} / ${r.phone} / ${r.email}
-차량: ${r.carUse}${r.carNo?' / '+r.carNo:''}
-대상: ${(r.targets||[]).join(', ')}
-요청: ${r.request||''}`); }
-  });
-
-  // 슬라이드 내비
-  setupSlides();
-});
-</script>
+  <!-- FOOTER -->
+  <footer class="border-t border-slate-200">
+    <div class="mx-auto max-w-6xl px-4 py-8 text-sm text-slate-600">
+      <p>© 2025 CPBC 가톨릭평화방송</p>
+      <p class="mt-1">문의: 서울시 중구 삼일대로 330 · (예시) 02-0000-0000</p>
+    </div>
+  </footer>
 </body>
 </html>
